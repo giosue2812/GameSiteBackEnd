@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 
+use App\DTO\GamesListDTO;
 use App\Services\GameService;
+use App\Utils\DataManipulation;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class GameController extends AbstractFOSRestController
 {
@@ -26,10 +30,19 @@ class GameController extends AbstractFOSRestController
     /**
      * @Rest\Get(path="/api/games")
      * @Rest\View()
+     * @throws \Exception
      */
     public function gamesListAction()
     {
-        return $this->gameService->gamesList();
+        try {
+            $games = $this->gameService->gamesList();
+            return DataManipulation::arrayMap(GamesListDTO::class,$games);
+        }
+        catch (Exception $exception)
+        {
+            throw new HttpException($exception->getCode(),$exception->getMessage());
+        }
+
     }
 
 }
