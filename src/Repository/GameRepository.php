@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,17 +17,6 @@ class GameRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Game::class);
-    }
-
-    /**
-     * @return array
-     */
-    public function gamesListRepository():array
-    {
-        return $this->createQueryBuilder('p')
-                    ->select('p.id','p.nom','p.image')
-                    ->getQuery()
-                    ->getResult();
     }
     // /**
     //  * @return Game[] Returns an array of Game objects

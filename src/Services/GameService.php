@@ -29,14 +29,14 @@ class GameService
      */
     public function gamesList()
     {
-        $games = $this->gameRepoistory->gamesListRepository();
+        $games = $this->gameRepoistory->findAll();
         if($games)
         {
             return $games;
         }
         else
         {
-            throw new Exception('Games not found');
+            throw new Exception('Games not found',404);
         }
     }
 }

@@ -3,18 +3,46 @@
 namespace App\DTO;
 
 use App\Entity\Game;
+use OpenApi\Annotations as OA;
 
+/**
+ * Class GamesListDTO
+ * @package App\DTO
+ * @OA\Schema(
+ *     description="Model of games list response",
+ *     type="object",
+ *     title="GameListDTO"
+ * )
+ */
 class GamesListDTO
 {
     /**
+     * @OA\Property(
+     *     title="Game ID",
+     *     property="id",
+     *     type="integer",
+     *     description="Id of the one game"
+     * )
      * @var integer $id
      */
     private $id;
     /**
+     * @OA\Property(
+     *     title="Game name",
+     *     property="nom",
+     *     type="string",
+     *     description="Name of the one game"
+     * )
      * @var string $nom
      */
     private $nom;
     /**
+     * @OA\Property(
+     *     title="Game image",
+     *     property="image",
+     *     type="string",
+     *     description="Image of the one game"
+     * )
      * @var string $image
      */
     private $image;
@@ -39,16 +67,6 @@ class GamesListDTO
     }
 
     /**
-     * @param int $id
-     * @return GamesListDTO
-     */
-    public function setId(int $id): GamesListDTO
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getNom(): string
@@ -57,32 +75,14 @@ class GamesListDTO
     }
 
     /**
-     * @param string $nom
-     * @return GamesListDTO
-     */
-    public function setNom(string $nom): GamesListDTO
-    {
-        $this->nom = $nom;
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getDescription(): string
+    public function getImage(): string
     {
-        return $this->description;
+        return $this->image;
     }
 
-    /**
-     * @param string $description
-     * @return GamesListDTO
-     */
-    public function setDescription(string $description): GamesListDTO
-    {
-        $this->description = $description;
-        return $this;
-    }
+
 
 
 }
