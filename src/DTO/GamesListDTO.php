@@ -38,6 +38,16 @@ class GamesListDTO
     private $nom;
     /**
      * @OA\Property(
+     *     title="Game Description",
+     *     property="description",
+     *     type="string",
+     *     description="Description of the one game"
+     * )
+     * @var string $description
+     */
+    private $description;
+    /**
+     * @OA\Property(
      *     title="Game image",
      *     property="image",
      *     type="string",
@@ -56,6 +66,7 @@ class GamesListDTO
         $this->id = $game->getId();
         $this->nom = $game->getNom();
         $this->image = $game->getImage();
+        $this->description = $game->getDescription();
     }
 
     /**
@@ -80,6 +91,14 @@ class GamesListDTO
     public function getImage(): string
     {
         return $this->image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 
 
