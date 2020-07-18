@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Entity\Game;
 use App\Repository\GameRepository;
+use Exception;
 
 class GameService
 {
@@ -23,11 +24,19 @@ class GameService
     }
 
     /**
-     * @return Game[]
+     * @return Game[] if array.lenght > 0
+     * @throws Exception if array.lenght <= 0
      */
     public function gamesList()
     {
         $games = $this->gameRepoistory->findAll();
-        return $games;
+        if($games)
+        {
+            return $games;
+        }
+        else
+        {
+            throw new Exception('Games not found',404);
+        }
     }
 }
