@@ -41,6 +41,80 @@
                     }
                 }
             }
+        },
+        "/game/edit/{gameId}": {
+            "put": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Update Game",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "parameter": "gameId",
+                        "name": "gameId",
+                        "in": "path",
+                        "description": "If for game to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update game",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/GameEditForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "No found Game, Platform, Editeur, Genre, No file to upload",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Form is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a game detail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GameDetailDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -60,6 +134,58 @@
                 },
                 "type": "object"
             },
+            "GameDetailDTO": {
+                "title": "GameDetailDTO",
+                "description": "Model of game detail",
+                "properties": {
+                    "id": {
+                        "title": "Game ID",
+                        "description": "Id of the one game",
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "title": "Game nom",
+                        "description": "Nom of the game",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Game description",
+                        "description": "Description of the Game",
+                        "type": "string"
+                    },
+                    "prix": {
+                        "title": "Game price",
+                        "description": "Price of game",
+                        "type": "decimal"
+                    },
+                    "image": {
+                        "title": "Game picture",
+                        "description": "Picture of game",
+                        "type": "string"
+                    },
+                    "video": {
+                        "title": "Game video",
+                        "description": "Video of game",
+                        "type": "string"
+                    },
+                    "editeur": {
+                        "title": "Game editeur",
+                        "description": "Editeur of the game",
+                        "type": "string"
+                    },
+                    "genre": {
+                        "title": "genre",
+                        "description": "Genre of the game",
+                        "type": "string"
+                    },
+                    "platform": {
+                        "title": "platform",
+                        "description": "Platform of the game",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "GamesListDTO": {
                 "title": "GameListDTO",
                 "description": "Model of games list response",
@@ -74,10 +200,55 @@
                         "description": "Name of the one game",
                         "type": "string"
                     },
+                    "description": {
+                        "title": "Game Description",
+                        "description": "Description of the one game",
+                        "type": "string"
+                    },
                     "image": {
                         "title": "Game image",
                         "description": "Image of the one game",
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "GameEditForm": {
+                "title": "GameEditForm",
+                "description": "Model to update game",
+                "properties": {
+                    "nom": {
+                        "title": "Game nom",
+                        "description": "Nom of game",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Game description",
+                        "description": "Game of description",
+                        "type": "string"
+                    },
+                    "video": {
+                        "title": "Game of video",
+                        "description": "Videos of the game",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "idEditeur": {
+                        "title": "Game editeur",
+                        "description": "Id of the editeur of the game",
+                        "type": "integer"
+                    },
+                    "idGenre": {
+                        "title": "Game genre",
+                        "description": "Id of the genre of the game",
+                        "type": "integer"
+                    },
+                    "idPlatform": {
+                        "title": "Game platform",
+                        "description": "Id of the platform of the game",
+                        "type": "integer"
                     }
                 },
                 "type": "object"

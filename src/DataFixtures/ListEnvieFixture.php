@@ -8,6 +8,7 @@ use App\Entity\Editeur;
 use App\Entity\Game;
 use App\Entity\Genre;
 use App\Entity\ListeEnvie;
+use App\Entity\Platform;
 use Cassandra\Date;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -21,6 +22,8 @@ class ListEnvieFixture extends Fixture
     public function load(ObjectManager $manager)
     {
 
+        $platform = new Platform();
+        $platform->setLabel('PS4');
         $listeEnvie = new ListeEnvie();
         $listeEnvie
             ->setLabel('Liste 1');
@@ -40,8 +43,10 @@ class ListEnvieFixture extends Fixture
             ->setEditeur($editeur)
             ->setImage('C:\xampp\htdocs\Formation\GamesSite\BackEnd\GameBackEnd\public\Images\ghostOfTs.jpg')
             ->setVideo(['https://www.youtube.com/watch?v=1OdLtewxqng','https://www.youtube.com/watch?v=uTyMV2LR8xY'])
-            ->setListeEnvie($listeEnvie);
+            ->setListeEnvie($listeEnvie)
+            ->setPlatform($platform);
 
+        $manager->persist($platform);
         $manager->persist($listeEnvie);
         $manager->persist($genre);
         $manager->persist($editeur);

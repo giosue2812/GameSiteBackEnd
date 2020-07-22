@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Editeur;
 use App\Entity\Game;
 use App\Entity\Genre;
+use App\Entity\Platform;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -17,6 +18,8 @@ class GameFixture extends Fixture
     public function load(ObjectManager $manager)
     {
         $date = new \DateTime();
+        $platform = new Platform();
+        $platform->setLabel('PS4');
         $genre = new Genre();
         $genre
             ->setLabel('Adventure');
@@ -32,8 +35,10 @@ class GameFixture extends Fixture
             ->setImage('test')
             ->setPrix(64.99)
             ->setEditeur($editeur)
-            ->setGenre($genre);
+            ->setGenre($genre)
+            ->setPlatform($platform);
 
+        $manager->persist($platform);
         $manager->persist($genre);
         $manager->persist($editeur);
         $manager->persist($game);

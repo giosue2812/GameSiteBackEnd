@@ -72,6 +72,12 @@ class Game
      */
     private $impressions;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Platform::class, inversedBy="games")
+     * @ORM\JoinColumn(name="id_platform")
+     */
+    private $Platform;
+
     public function __construct()
     {
         $this->impressions = new ArrayCollection();
@@ -205,5 +211,17 @@ class Game
     public function getImpressions(): Collection
     {
         return $this->impressions;
+    }
+
+    public function getPlatform(): ?Platform
+    {
+        return $this->Platform;
+    }
+
+    public function setPlatform(?Platform $Platform): self
+    {
+        $this->Platform = $Platform;
+
+        return $this;
     }
 }
