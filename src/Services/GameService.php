@@ -125,8 +125,8 @@ class GameService
     /**
      * @param $image
      * @param $gameId
-     * @return Game[]|null
-     * @throws Exception
+     * @return Game[] if array.lenght > 0 and if $game != null and $imageName != null
+     * @throws Exception if array.lenght <= 0 or if $game == null and $imageName == null or PDOException is rise
      */
     public function upload($gameId,$image)
     {

@@ -31,6 +31,10 @@ class UploadService
         $this->slugger = $slugger;
     }
 
+    /**
+     * @param UploadedFile $file
+     * @return string
+     */
     public function upload(UploadedFile $file)
     {
         $originalFilename = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
@@ -47,6 +51,9 @@ class UploadService
         return $fileName;
     }
 
+    /**
+     * @return string
+     */
     public function getTargetDirectory()
     {
         return $this->targetDirectory;

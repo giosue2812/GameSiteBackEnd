@@ -144,6 +144,51 @@ class GameController extends AbstractFOSRestController
     /**
      * @Rest\Post(path="/api/game/upload/{gameId}")
      * @Rest\View()
+     * @OA\Post(
+     *     tags={"Game"},
+     *     path="/game/upload/{gameId}",
+     *     summary="Upload image of game",
+     *     operationId="upload",
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      description="Picture to upload",
+     *                      property="image",
+     *                      type="file",
+     *                      format="file"
+     *                  ),
+     *                 required={"file"}
+     *              )
+     *          )
+     *     ),
+     *     @OA\Parameter(
+     *          description="Id of game",
+     *          in="path",
+     *          name="gameId",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer",
+     *              format="int64"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *          response="404",
+     *          description="Not found game or not found file to upload",
+     *          @OA\JsonContent(ref="#/components/schemas/ApiErrorResponseDTO")
+     *     ),
+     *     @OA\Response(
+     *          response="500",
+     *          description="Unexpected error",
+     *          @OA\JsonContent(ref="#/components/schemas/ApiErrorResponseDTO")
+     *     ),
+     *     @OA\Response(
+     *          response="200",
+     *          description="Return game upadted",
+     *          @OA\JsonContent(ref="#/components/schemas/GameDetailDTO")
+     *     )
+     * )
      * @param Request $request
      * @return array
      * @throws \Exception

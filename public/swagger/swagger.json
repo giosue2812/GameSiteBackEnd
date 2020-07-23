@@ -74,7 +74,7 @@
                 },
                 "responses": {
                     "404": {
-                        "description": "No found Game, Platform, Editeur, Genre, No file to upload",
+                        "description": "No found Game, Platform, Editeur, Genre",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -105,6 +105,78 @@
                     },
                     "200": {
                         "description": "Return a game detail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GameDetailDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/game/upload/{gameId}": {
+            "post": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Upload image of game",
+                "operationId": "upload",
+                "parameters": [
+                    {
+                        "name": "gameId",
+                        "in": "path",
+                        "description": "Id of game",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "Picture to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "Not found game or not found file to upload",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return game upadted",
                         "content": {
                             "application/json": {
                                 "schema": {
