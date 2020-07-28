@@ -66,6 +66,50 @@ class GameController extends AbstractFOSRestController
     }
 
     /**
+     * @Rest\Get(path="/api/game/{gameId}")
+     * @Rest\View()
+     * @OA\Get(
+     *     tags={"Game"},
+     *     path="/game/{gameId}",
+     *     summary="Get a game by id",
+     *     operationId="gameId",
+     *     @OA\Parameter(
+     *          parameter="gameId",
+     *          in="path",
+     *          name="gameId",
+     *          description="Id for game to get",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *          response="404",
+     *          description="No found game",
+     *          @OA\JsonContent(ref="#/components/schemas/ApiErrorResponseDTO")
+     *     ),
+     *     @OA\Response(
+     *          response="200",
+     *          description="Return a array of one game",
+     *          @OA\JsonContent(ref="#/components/schemas/GameDetailDTO")
+     *     )
+     * )
+     * @param Request $request
+     * @return array
+     * @throws \Exception
+     */
+    public function gameAction(Request $request)
+    {
+        try {
+            $game = $this->gameService->game($request->get('gameId'));
+            return DataManipulation::arrayMap(GameDetailDTO::class,$game);
+        }
+        catch (Exception $exception)
+        {
+            throw new HttpException($exception->getCode(),$exception->getMessage());
+        }
+    }
+    /**
      * @Rest\Put(path="/api/game/edit/{gameId}")
      * @Rest\View()
      * @OA\Put(

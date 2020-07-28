@@ -42,6 +42,49 @@
                 }
             }
         },
+        "/game/{gameId}": {
+            "get": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Get a game by id",
+                "operationId": "gameId",
+                "parameters": [
+                    {
+                        "parameter": "gameId",
+                        "name": "gameId",
+                        "in": "path",
+                        "description": "Id for game to get",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "No found game",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a array of one game",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GameDetailDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/game/edit/{gameId}": {
             "put": {
                 "tags": [

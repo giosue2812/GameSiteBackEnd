@@ -83,6 +83,23 @@ class GameService
     }
 
     /**
+     * @param $id
+     * @return Game[] if array.lenght > 0
+     * @throws Exception if array.lenght <= 0
+     */
+    public function game($id)
+    {
+        $game = $this->gameIdArray($id);
+        if($game)
+        {
+            return $game;
+        }
+        else
+        {
+            throw new Exception('No found game',404);
+        }
+    }
+    /**
      * @param GameEditForm $gameEditForm
      * @param $id_game
      * @return Game[] if array.lenght > 0 and if idEditeur and idGenre and idPlatform != null
