@@ -230,6 +230,37 @@
                     }
                 }
             }
+        },
+        "/genres": {
+            "get": {
+                "tags": [
+                    "Genre"
+                ],
+                "summary": "Get a list of genre",
+                "operationId": "genre",
+                "responses": {
+                    "404": {
+                        "description": "No found genres list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of genre",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GenresListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -323,6 +354,23 @@
                     "image": {
                         "title": "Game image",
                         "description": "Image of the one game",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "GenresListDTO": {
+                "title": "GenresListDTO",
+                "description": "Model of genres list response",
+                "properties": {
+                    "id": {
+                        "title": "Genre ID",
+                        "description": "Id of the one genre",
+                        "type": "integer"
+                    },
+                    "label": {
+                        "title": "Genre Label",
+                        "description": "Label of genre",
                         "type": "string"
                     }
                 },
