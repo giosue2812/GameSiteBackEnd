@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
+  <component name="PhpStepFilterConfiguration">
+    <skipped_functions>
+      <skipped_function name="Symfony\Component\ErrorHandler\DebugClassLoader-&gt;normalizeType" />
+      <skipped_function name="Symfony\Component\ErrorHandler\DebugClassLoader-&gt;setReturnType" />
+      <skipped_function name="Symfony\Component\ErrorHandler\DebugClassLoader-&gt;checkAnnotations" />
+      <skipped_function name="Symfony\Component\ErrorHandler\DebugClassLoader-&gt;checkClass" />
+      <skipped_function name="Symfony\Component\ErrorHandler\DebugClassLoader-&gt;loadClass" />
+      <skipped_function name="Symfony\Component\Config\Resource\ClassExistenceResource-&gt;isFresh" />
+      <skipped_function name="Symfony\Component\DependencyInjection\ContainerBuilder-&gt;getReflectionClass" />
+      <skipped_function name="Symfony\Component\DependencyInjection\Loader\YamlFileLoader-&gt;findClasses" />
+      <skipped_function name="Symfony\Component\DependencyInjection\Loader\YamlFileLoader-&gt;registerClasses" />
+      <skipped_function name="Symfony\Component\DependencyInjection\Loader\YamlFileLoader-&gt;parseDefinition" />
+      <skipped_function name="Symfony\Component\DependencyInjection\Loader\YamlFileLoader-&gt;parseDefinitions" />
+      <skipped_function name="Symfony\Component\DependencyInjection\Loader\YamlFileLoader-&gt;load" />
+      <skipped_function name="Symfony\Component\DependencyInjection\Loader\PhpFileLoader-&gt;doImport" />
+      <skipped_function name="Symfony\Component\DependencyInjection\Loader\PhpFileLoader-&gt;import" />
+      <skipped_function name="Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator-&gt;import" />
+      <skipped_function name="App\Kernel-&gt;configureContainer" />
+      <skipped_function name="App\Kernel-&gt;Symfony\Bundle\FrameworkBundle\Kernel\{closure:C:\xampp\htdocs\GamesSite\BackEnd\vendor\symfony\framework-bundle\Kernel\MicroKernelTrait.php:84-143}" />
+      <skipped_function name="Symfony\Component\DependencyInjection\Loader\ClosureLoader-&gt;load" />
+      <skipped_function name="App\Kernel-&gt;registerContainerConfiguration" />
+      <skipped_function name="App\Kernel-&gt;buildContainer" />
+      <skipped_function name="App\Kernel-&gt;initializeContainer" />
+    </skipped_functions>
+  </component>
 </project>

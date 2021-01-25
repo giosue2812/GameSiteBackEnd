@@ -6,5 +6,6 @@
     <mapping directory="$PROJECT_DIR$/GameBackEnd" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/GameBackEnd/GameSiteBackEnd" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/GameBackEnd/feature/PrepaJsonResponse" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/openapi-generator" vcs="Git" />
   </component>
 </project>

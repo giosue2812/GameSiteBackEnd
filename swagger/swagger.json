@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080/Formation/GamesSite/BackEnd/public/api/",
+            "url": "http://localhost:8080/GamesSite/BackEnd/public/api/",
             "description": "API Games DOC"
         }
     ]

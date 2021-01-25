@@ -5,8 +5,8 @@ namespace App\DTO;
 
 
 use App\Entity\Game;
+use App\Entity\Video;
 use OpenApi\Annotations as OA;
-
 /**
  * Class GameDetailDTO
  * @package App\DTO)
@@ -52,7 +52,7 @@ class GameDetailDTO
      * @OA\Property(
      *     title="Game price",
      *     property="prix",
-     *     type="decimal",
+     *     type="integer",
      *     description="Price of game"
      * )
      * @var float|null
@@ -72,7 +72,10 @@ class GameDetailDTO
      * @OA\Property(
      *     title="Game video",
      *     property="video",
-     *     type="string",
+     *     type="array",
+     *     @OA\Items(
+     *     type="string"
+     *      ),
      *     description="Video of game"
      * )
      * @var mixed
@@ -108,7 +111,28 @@ class GameDetailDTO
      * @var string|null
      */
     private $platform;
-
+    /**
+     * @OA\Property(
+     *     title="Date Sortie",
+     *     property="dateSortie",
+     *     type="string",
+     *     format="date",
+     *     description="Date Sortie of game"
+     * )
+     * @var \DateTime
+     */
+    private $dateSortie;
+    /**
+     * @OA\Property(
+     *     title="Date Achat",
+     *     property="dateAchat",
+     *     type="string",
+     *     format="date",
+     *     description="Date achat of game"
+     * )
+     * @var \DateTime
+     */
+    private $dateAchat;
     /**
      * GameDetailDTO constructor.
      * @param Game $game
@@ -120,10 +144,17 @@ class GameDetailDTO
         $this->description = $game->getDescription();
         $this->prix = $game->getPrix();
         $this->image = $game->getImage();
-        $this->video = $game->getVideo();
+        $this->video = array_map(function($item){
+            /**
+             * @var Video $item
+             */
+            return [$item->getId(),$item->getVideo()];
+        },$game->getVideo()->getValues());
         $this->editeur = $game->getEditeur()->getLabel();
         $this->genre = $game->getGenre()->getLabel();
         $this->platform = $game->getPlatform()->getLabel();
+        $this->dateSortie = $game->getDateSortie();
+        $this->dateAchat = $game->getDateAchat();
     }
 
     /**
@@ -197,4 +228,22 @@ class GameDetailDTO
     {
         return $this->platform;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateSortie(): \DateTime
+    {
+        return $this->dateSortie;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateAchat(): \DateTime
+    {
+        return $this->dateAchat;
+    }
+
+
 }

@@ -6,11 +6,92 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080/Formation/GamesSite/BackEnd/public/api/",
+            "url": "http://localhost:8080/GamesSite/BackEnd/public/api/",
             "description": "API Games DOC"
         }
     ],
     "paths": {
+        "/editeurs": {
+            "get": {
+                "tags": [
+                    "Editeur"
+                ],
+                "summary": "Get a list of editeur",
+                "operationId": "editeur",
+                "responses": {
+                    "404": {
+                        "description": "No found editeur list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of editeur",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EditeurListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/editeur/new": {
+            "post": {
+                "tags": [
+                    "Editeur"
+                ],
+                "summary": "New Editeur",
+                "operationId": "App\\Controller\\EditeurController::editeurNewAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EditeurNewForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Form is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of editeur",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EditeurListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/games": {
             "get": {
                 "tags": [
@@ -35,6 +116,37 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/GamesListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/listEnvies": {
+            "get": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Get a list of game not buy",
+                "operationId": "game",
+                "responses": {
+                    "404": {
+                        "description": "No found list envie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of game not buy",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListEnvieDTO"
                                 }
                             }
                         }
@@ -91,13 +203,13 @@
                     "Game"
                 ],
                 "summary": "Update Game",
-                "operationId": "update",
+                "operationId": "gameId",
                 "parameters": [
                     {
                         "parameter": "gameId",
                         "name": "gameId",
                         "in": "path",
-                        "description": "If for game to update",
+                        "description": "Id for game to update",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -110,7 +222,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#components/schemas/GameEditForm"
+                                "$ref": "#/components/schemas/GameEditForm"
                             }
                         }
                     }
@@ -186,7 +298,7 @@
                                     "file"
                                 ],
                                 "properties": {
-                                    "image": {
+                                    "picture": {
                                         "description": "Picture to upload",
                                         "type": "file",
                                         "format": "file"
@@ -230,6 +342,851 @@
                     }
                 }
             }
+        },
+        "/game/new": {
+            "post": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "New Game",
+                "operationId": "App\\Controller\\GameController::gameNewAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GameNewForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Form is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a array of new product",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GameDetailDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/game/delete/{idGame}": {
+            "delete": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Delete Game",
+                "operationId": "idGame",
+                "parameters": [
+                    {
+                        "parameter": "idGame",
+                        "name": "idGame",
+                        "in": "path",
+                        "description": "Delete on game",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Delete not possibel",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of game",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GamesListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/genres": {
+            "get": {
+                "tags": [
+                    "Genre"
+                ],
+                "summary": "Get a list of genre",
+                "operationId": "genre",
+                "responses": {
+                    "404": {
+                        "description": "No found genres list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of genre",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GenresListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/genre/new": {
+            "post": {
+                "tags": [
+                    "Genre"
+                ],
+                "summary": "New Genre",
+                "operationId": "App\\Controller\\GenreController::genreNewAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GenreNewForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Form is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of genre",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GenresListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/impressions": {
+            "get": {
+                "tags": [
+                    "Impression"
+                ],
+                "summary": "Get a list of impressions",
+                "operationId": "impression",
+                "responses": {
+                    "404": {
+                        "description": "No found impression list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of impression",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ImpressionDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/impression/new": {
+            "post": {
+                "tags": [
+                    "Impression"
+                ],
+                "summary": "New Impression",
+                "operationId": "App\\Controller\\ImpressionController::impressionNewAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImpressionForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Form is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of impression",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ImpressionDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/impression/edit/{idImpression}": {
+            "put": {
+                "tags": [
+                    "Impression"
+                ],
+                "summary": "Impression Update",
+                "operationId": "idImpression",
+                "parameters": [
+                    {
+                        "parameter": "idImpression",
+                        "name": "idImpression",
+                        "in": "path",
+                        "description": "Id of impression game",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Impression Update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/ImpressionForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "No found impression game",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Form is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a impression list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ImpressionDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/impression/{idImpression}": {
+            "get": {
+                "tags": [
+                    "Impression"
+                ],
+                "summary": "Get impression game",
+                "operationId": "idImpression",
+                "parameters": [
+                    {
+                        "parameter": "idImpression",
+                        "name": "idImpression",
+                        "in": "path",
+                        "description": "Id impression game to get",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "No found impression",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return an array of impression",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ImpressionDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/platforms": {
+            "get": {
+                "tags": [
+                    "Platform"
+                ],
+                "summary": "Get a list of platform",
+                "operationId": "platform",
+                "responses": {
+                    "404": {
+                        "description": "No found a list of platform",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of platform",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlatformListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/platform/new": {
+            "post": {
+                "tags": [
+                    "Platform"
+                ],
+                "summary": "New Platform",
+                "operationId": "App\\Controller\\PlatformController::platformNewAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PlatformNewForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Form is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list a platform",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlatformListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/new": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "New User",
+                "operationId": "App\\Controller\\UserController::newUserAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserNewForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Form is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexected Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return impression list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a list of Users",
+                "operationId": "user",
+                "responses": {
+                    "404": {
+                        "description": "No found users list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDetailSetupDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{userID}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a user by id",
+                "operationId": "userID",
+                "parameters": [
+                    {
+                        "parameter": "userID",
+                        "name": "userID",
+                        "in": "path",
+                        "description": "Id for user to get",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "No found game",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return an array of one user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDetailSetupDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/username/{username}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a user by username",
+                "operationId": "username",
+                "parameters": [
+                    {
+                        "parameter": "username",
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username for user to get",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "No found game",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return an array of one user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/edit/profil/{username}": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user profil",
+                "operationId": "username",
+                "parameters": [
+                    {
+                        "parameter": "username",
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username for user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Username for user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserEditForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Form is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return profil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/editRole/{userId}": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update Role of User",
+                "operationId": "userId",
+                "parameters": [
+                    {
+                        "parameter": "userId",
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id for user to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update role user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserEditRoleForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "No found user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Form is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a game detail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDetailSetupDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/delete/{userId}": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete User",
+                "operationId": "userId",
+                "parameters": [
+                    {
+                        "parameter": "userId",
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Delete user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Delete not possibel",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a list of game",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/video/delete/{videoId}": {
+            "delete": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "Delete on video of game",
+                "operationId": "videoId",
+                "parameters": [
+                    {
+                        "parameter": "videoId",
+                        "name": "videoId",
+                        "in": "path",
+                        "description": "Delete one video",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Video Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Return a array of one game",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GameDetailDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -244,6 +1201,28 @@
                     },
                     "message": {
                         "description": "Error message",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "EditeurListDTO": {
+                "title": "EditeurListDTO",
+                "description": "Model of editeur response",
+                "properties": {
+                    "id": {
+                        "title": "Editeur ID",
+                        "description": "Id of the one editeur",
+                        "type": "integer"
+                    },
+                    "label": {
+                        "title": "Editeur Label",
+                        "description": "Label of editeur",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Editeur Description",
+                        "description": "Description of editeur",
                         "type": "string"
                     }
                 },
@@ -271,7 +1250,7 @@
                     "prix": {
                         "title": "Game price",
                         "description": "Price of game",
-                        "type": "decimal"
+                        "type": "integer"
                     },
                     "image": {
                         "title": "Game picture",
@@ -281,7 +1260,10 @@
                     "video": {
                         "title": "Game video",
                         "description": "Video of game",
-                        "type": "string"
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     "editeur": {
                         "title": "Game editeur",
@@ -297,6 +1279,18 @@
                         "title": "platform",
                         "description": "Platform of the game",
                         "type": "string"
+                    },
+                    "dateSortie": {
+                        "title": "Date Sortie",
+                        "description": "Date Sortie of game",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "dateAchat": {
+                        "title": "Date Achat",
+                        "description": "Date achat of game",
+                        "type": "string",
+                        "format": "date"
                     }
                 },
                 "type": "object"
@@ -328,10 +1322,196 @@
                 },
                 "type": "object"
             },
+            "GenresListDTO": {
+                "title": "GenresListDTO",
+                "description": "Model of genres list response",
+                "properties": {
+                    "id": {
+                        "title": "Genre ID",
+                        "description": "Id of the one genre",
+                        "type": "integer"
+                    },
+                    "label": {
+                        "title": "Genre Label",
+                        "description": "Label of genre",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ImpressionDTO": {
+                "title": "ImpressionDTO",
+                "description": "Model of impression list",
+                "properties": {
+                    "id": {
+                        "title": "Impression Id",
+                        "description": "Id of impression",
+                        "type": "integer"
+                    },
+                    "gameTitre": {
+                        "title": "Impression Game",
+                        "description": "Impression Game Titre",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Impression Description",
+                        "description": "Impression Game Description",
+                        "type": "string"
+                    },
+                    "howEnd": {
+                        "title": "Impression How End",
+                        "description": "Impression How End Game",
+                        "type": "integer"
+                    },
+                    "tauxDeCompletion": {
+                        "title": "Impression Taux de Completion",
+                        "description": "Impression Taux de Completion Game",
+                        "type": "integer"
+                    },
+                    "dateImpression": {
+                        "title": "Impression Date Impression",
+                        "description": "Impression Date Impression Game",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "image": {
+                        "title": "Impression Image",
+                        "description": "Impression Image Game",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ListEnvieDTO": {
+                "title": "ListEnvieDTO",
+                "description": "Model of game list envie",
+                "properties": {
+                    "id": {
+                        "title": "Game Id",
+                        "description": "Id of the one game",
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "title": "Game name",
+                        "description": "Name of the game",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Game description",
+                        "description": "Description of the game",
+                        "type": "string"
+                    },
+                    "dateSortie": {
+                        "title": "Date of out",
+                        "description": "Date of out the game",
+                        "type": "string"
+                    },
+                    "image": {
+                        "title": "Image game",
+                        "description": "Image of the game",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "PlatformListDTO": {
+                "title": "PlatformListDTO",
+                "description": "Model of platform response",
+                "properties": {
+                    "id": {
+                        "title": "Platform ID",
+                        "description": "Id of the one platform",
+                        "type": "integer"
+                    },
+                    "label": {
+                        "title": "Platform label",
+                        "description": "Label of platform",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UserDTO": {
+                "title": "UserDTO",
+                "description": "Model of user",
+                "properties": {
+                    "nom": {
+                        "title": "User Nom",
+                        "description": "Name of one user",
+                        "type": "string"
+                    },
+                    "prenom": {
+                        "title": "User Prenom",
+                        "description": "Prenom of user",
+                        "type": "string"
+                    },
+                    "email": {
+                        "title": "User email",
+                        "description": "Email of user",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UserDetailSetupDTO": {
+                "title": "UserDetailSetupDTO",
+                "description": "Model of user detail",
+                "properties": {
+                    "id": {
+                        "title": "User Id",
+                        "description": "Id of user",
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "title": "User nom",
+                        "description": "Nom of user",
+                        "type": "string"
+                    },
+                    "prenom": {
+                        "title": "User Prenom",
+                        "description": "Prenom of user",
+                        "type": "string"
+                    },
+                    "email": {
+                        "title": "User email",
+                        "description": "email of user",
+                        "type": "string"
+                    },
+                    "role": {
+                        "title": "User Role",
+                        "description": "Role Array of user",
+                        "type": "array",
+                        "items": "role"
+                    }
+                },
+                "type": "object"
+            },
+            "EditeurNewForm": {
+                "title": "EditeurNewForm",
+                "description": "Model to create a new Editeur",
+                "properties": {
+                    "label": {
+                        "title": "Editeur Label",
+                        "description": "Label of Editeur",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Editeur Description",
+                        "description": "Description of Editeur",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "GameEditForm": {
                 "title": "GameEditForm",
                 "description": "Model to update game",
                 "properties": {
+                    "id": {
+                        "title": "Id game",
+                        "description": "Id of game",
+                        "type": "integer"
+                    },
                     "nom": {
                         "title": "Game nom",
                         "description": "Nom of game",
@@ -342,28 +1522,208 @@
                         "description": "Game of description",
                         "type": "string"
                     },
+                    "prix": {
+                        "title": "Prix of game",
+                        "description": "Prix of one game",
+                        "type": "integer"
+                    },
+                    "dateAchat": {
+                        "title": "Date achat",
+                        "description": "Date achat of game",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "dateSortie": {
+                        "title": "Date Sortie",
+                        "description": "Date sortie of game",
+                        "type": "string",
+                        "format": "date"
+                    },
                     "video": {
                         "title": "Game of video",
                         "description": "Videos of the game",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                        "type": "string"
                     },
-                    "idEditeur": {
+                    "editeur": {
                         "title": "Game editeur",
-                        "description": "Id of the editeur of the game",
-                        "type": "integer"
+                        "description": "label of the editeur of the game",
+                        "type": "string"
                     },
-                    "idGenre": {
+                    "genre": {
                         "title": "Game genre",
-                        "description": "Id of the genre of the game",
+                        "description": "label of the genre of the game",
+                        "type": "string"
+                    },
+                    "platform": {
+                        "title": "Game platform",
+                        "description": "label of the platform of the game",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "GameNewForm": {
+                "title": "GameNewForm",
+                "description": "Model to create a new Game",
+                "properties": {
+                    "nom": {
+                        "title": "Name game",
+                        "description": "Name of Game",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Description Game",
+                        "description": "Description of Game",
+                        "type": "string"
+                    },
+                    "prix": {
+                        "title": "Prix of game",
+                        "description": "Prix of one game",
                         "type": "integer"
                     },
-                    "idPlatform": {
-                        "title": "Game platform",
-                        "description": "Id of the platform of the game",
+                    "dateAchat": {
+                        "title": "Date achat",
+                        "description": "Date achat of game",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "dateSortie": {
+                        "title": "Date Sortie",
+                        "description": "Date sortie of game",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "editeur": {
+                        "title": "Editeur Game",
+                        "description": "Editeur of game",
+                        "type": "string"
+                    },
+                    "genre": {
+                        "title": "Genre game",
+                        "description": "Genre of game",
+                        "type": "string"
+                    },
+                    "platform": {
+                        "title": "Platform game",
+                        "description": "Platform of game",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "GenreNewForm": {
+                "title": "GenreNewForm",
+                "description": "Model to create a new genre",
+                "properties": {
+                    "label": {
+                        "title": "Genre Lable",
+                        "description": "Label of genre",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ImpressionForm": {
+                "title": "ImpressionForm",
+                "description": "Model of impression form",
+                "properties": {
+                    "idGame": {
+                        "title": "Game Id",
+                        "description": "Id of the game",
                         "type": "integer"
+                    },
+                    "description": {
+                        "title": "Game description",
+                        "description": "Description of game",
+                        "type": "string"
+                    },
+                    "howEnd": {
+                        "title": "How End Game",
+                        "description": "How End Game",
+                        "type": "integer"
+                    },
+                    "tauxDeCompletion": {
+                        "title": "Taux de Completion",
+                        "description": "Taux de Completion Game",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "PlatformNewForm": {
+                "title": "PlatformNewForm",
+                "description": "Model to create a new Platform",
+                "properties": {
+                    "label": {
+                        "title": "Platform Label",
+                        "description": "Label of Platform",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UserEditForm": {
+                "title": "UserEditForm",
+                "description": "Model of UserEditForm",
+                "properties": {
+                    "email": {
+                        "title": "User Email",
+                        "description": "Email for user",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "User name",
+                        "description": "Name for user",
+                        "type": "string"
+                    },
+                    "prenom": {
+                        "title": "User prenom",
+                        "description": "Prenom of user",
+                        "type": "string"
+                    },
+                    "password": {
+                        "title": "User Password",
+                        "description": "Password of user",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UserEditRoleForm": {
+                "title": "UserEditRoleForm",
+                "description": "Model of user edit role",
+                "properties": {
+                    "role": {
+                        "title": "User role",
+                        "description": "Role of user",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UserNewForm": {
+                "title": "UserNewForm",
+                "description": "Model of user new form",
+                "properties": {
+                    "email": {
+                        "title": "User Email",
+                        "description": "Email of one user",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "User name",
+                        "description": "Name of user",
+                        "type": "string"
+                    },
+                    "prenom": {
+                        "title": "User Prenom",
+                        "description": "Prenom of User",
+                        "type": "string"
+                    },
+                    "password": {
+                        "title": "User Password",
+                        "description": "Password of User",
+                        "type": "string"
                     }
                 },
                 "type": "object"
