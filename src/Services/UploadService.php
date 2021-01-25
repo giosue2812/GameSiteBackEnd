@@ -5,7 +5,9 @@ namespace App\Services;
 
 
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -19,16 +21,22 @@ class UploadService
      * @var SluggerInterface $slugger
      */
     private $slugger;
+    /**
+     * @var Filesystem $fileSystem
+     */
+    private $fileSystem;
 
     /**
      * UploadService constructor.
      * @param $targetDirectory
      * @param SluggerInterface $slugger
+     * @param Filesystem $fileSystem
      */
-    public function __construct($targetDirectory, SluggerInterface $slugger)
+    public function __construct($targetDirectory, SluggerInterface $slugger, Filesystem $fileSystem)
     {
         $this->targetDirectory = $targetDirectory;
         $this->slugger = $slugger;
+        $this->fileSystem = $fileSystem;
     }
 
     /**
@@ -51,6 +59,16 @@ class UploadService
         return $fileName;
     }
 
+    /**
+     * @param $path
+     */
+    public function removeFile($path)
+    {
+        $file = substr($path,54);
+        $target = "C:/xampp/htdocs/GamesSite/BackEnd/public/Images/".$file;
+        $this->fileSystem->remove([$target]);
+
+    }
     /**
      * @return string
      */

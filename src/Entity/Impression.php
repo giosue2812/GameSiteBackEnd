@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ImpressionRepository::class)
  */
-class Impression
+class Impression extends BaseEntity
 {
     /**
      * @ORM\Id()
@@ -18,10 +18,22 @@ class Impression
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text", length=255)
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="integer",nullable=false)
+     */
+    private $howEnd;
+    /**
+     * @ORM\Column(type="float",nullable=false)
+     */
+    private $tauxDeCompletion;
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $dateImpression;
     /**
      * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="impressions")
      * @ORM\JoinColumn(name="id_game")
@@ -45,6 +57,42 @@ class Impression
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getHowEnd()
+    {
+        return $this->howEnd;
+    }
+
+    /**
+     * @param mixed $howEnd
+     * @return Impression
+     */
+    public function setHowEnd($howEnd)
+    {
+        $this->howEnd = $howEnd;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTauxDeCompletion()
+    {
+        return $this->tauxDeCompletion;
+    }
+
+    /**
+     * @param mixed $tauxDeCompletion
+     * @return Impression
+     */
+    public function setTauxDeCompletion($tauxDeCompletion)
+    {
+        $this->tauxDeCompletion = $tauxDeCompletion;
+        return $this;
+    }
+
     public function getGame(): ?Game
     {
         return $this->Game;
@@ -54,6 +102,24 @@ class Impression
     {
         $this->Game = $Game;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateImpression()
+    {
+        return $this->dateImpression;
+    }
+
+    /**
+     * @param mixed $dateImpression
+     * @return Impression
+     */
+    public function setDateImpression($dateImpression)
+    {
+        $this->dateImpression = $dateImpression;
         return $this;
     }
 

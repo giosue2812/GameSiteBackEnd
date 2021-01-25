@@ -2,6 +2,7 @@
 
 namespace App\Models\Forms;
 
+use Cassandra\Date;
 use Symfony\Component\Validator\Constraints as Assert;
 use OpenApi\Annotations as OA;
 
@@ -16,6 +17,16 @@ use OpenApi\Annotations as OA;
  */
 class GameEditForm
 {
+    /**
+     * @OA\Property(
+     *     title="Id game",
+     *     property="id",
+     *     type="integer",
+     *     description="Id of game"
+     * )
+     * @var integer $id
+     */
+    private $id;
     /**
      * @var string $nom
      * @Assert\NotNull()
@@ -39,45 +50,94 @@ class GameEditForm
     private $description;
     /**
      * @OA\Property(
+     *     title="Prix of game",
+     *     property="prix",
+     *     type="integer",
+     *     description="Prix of one game"
+     * )
+     * @var float $prix
+     */
+    private $prix;
+    /**
+     * @OA\Property(
+     *     title="Date achat",
+     *     property="dateAchat",
+     *     type="string",
+     *     format="date",
+     *     description="Date achat of game"
+     * )
+     * @var Date $dateAchat
+     */
+    private $date_achat;
+    /**
+     * @OA\Property(
+     *     title="Date Sortie",
+     *     property="dateSortie",
+     *     type="string",
+     *     format="date",
+     *     description="Date sortie of game"
+     * )
+     * @var Date $date_sortie
+     */
+    private $date_sortie;
+    /**
+     * @OA\Property(
      *     title="Game of video",
      *     property="video",
-     *     type="array",
-     *     @OA\Items(type="string"),
+     *     type="string",
      *     description="Videos of the game"
      * )
-     * @var array $video
+     * @var string $video
      */
     private $video;
     /**
      * @OA\Property(
      *     title="Game editeur",
-     *     property="idEditeur",
-     *     type="integer",
-     *     description="Id of the editeur of the game"
+     *     property="editeur",
+     *     type="string",
+     *     description="label of the editeur of the game"
      * )
-     * @var integer $idEditeur
+     * @var string $editeur
      */
-    private $idEditeur;
+    private $editeur;
     /**
      * @OA\Property(
      *     title="Game genre",
-     *     property="idGenre",
-     *     type="integer",
-     *     description="Id of the genre of the game"
+     *     property="genre",
+     *     type="string",
+     *     description="label of the genre of the game"
      * )
-     * @var integer $idGenre
+     * @var string $genre
      */
-    private $idGenre;
+    private $genre;
     /**
      * @OA\Property(
      *     title="Game platform",
-     *     property="idPlatform",
-     *     type="integer",
-     *     description="Id of the platform of the game"
+     *     property="platform",
+     *     type="string",
+     *     description="label of the platform of the game"
      * )
-     * @var integer $idPlatform
+     * @var string $platform
      */
-    private $idPlatform;
+    private $platform;
+
+    /**
+     * @return int
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return GameEditForm
+     */
+    public function setId(int $id): GameEditForm
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     /**
      * @return string
@@ -116,74 +176,130 @@ class GameEditForm
     }
 
     /**
-     * @return array
+     * @return float
      */
-    public function getVideo(): ?array
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    /**
+     * @param float $prix
+     * @return GameEditForm
+     */
+    public function setPrix(float $prix): GameEditForm
+    {
+        $this->prix = $prix;
+        return $this;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getDateAchat()
+    {
+        return $this->date_achat;
+    }
+
+    /**
+     * @param mixed $date_achat
+     * @return GameEditForm
+     */
+    public function setDateAchat($date_achat)
+    {
+        $this->date_achat = $date_achat;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateSortie()
+    {
+        return $this->date_sortie;
+    }
+
+    /**
+     * @param mixed $date_sortie
+     * @return GameEditForm
+     */
+    public function setDateSortie($date_sortie)
+    {
+        $this->date_sortie = $date_sortie;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVideo(): ?string
     {
         return $this->video;
     }
 
     /**
-     * @param array $video
+     * @param string $video
      * @return GameEditForm
      */
-    public function setVideo(array $video): GameEditForm
+    public function setVideo(string $video): GameEditForm
     {
         $this->video = $video;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIdEditeur(): ?int
+    public function getEditeur(): ?string
     {
-        return $this->idEditeur;
+        return $this->editeur;
     }
 
     /**
-     * @param int $idEditeur
+     * @param string $editeur
      * @return GameEditForm
      */
-    public function setIdEditeur(int $idEditeur): GameEditForm
+    public function setEditeur(string $editeur): GameEditForm
     {
-        $this->idEditeur = $idEditeur;
+        $this->editeur = $editeur;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIdGenre(): ?int
+    public function getGenre(): ?string
     {
-        return $this->idGenre;
+        return $this->genre;
     }
 
     /**
-     * @param int $idGenre
+     * @param string $genre
      * @return GameEditForm
      */
-    public function setIdGenre(int $idGenre): GameEditForm
+    public function setGenre(string $genre): GameEditForm
     {
-        $this->idGenre = $idGenre;
+        $this->genre = $genre;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIdPlatform(): ?int
+    public function getPlatform(): ?string
     {
-        return $this->idPlatform;
+        return $this->platform;
     }
 
     /**
-     * @param int $idPlatform
+     * @param string $platform
      * @return GameEditForm
      */
-    public function setIdPLatform(int $idPlatform): GameEditForm
+    public function setPlatform(string $platform): GameEditForm
     {
-        $this->idPlatform = $idPlatform;
+        $this->platform = $platform;
         return $this;
     }
 
