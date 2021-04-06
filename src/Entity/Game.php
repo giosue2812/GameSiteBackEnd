@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=GameRepository::class)
  */
-class Game
+class Game extends BaseEntity
 {
     /**
      * @ORM\Id()
@@ -25,7 +25,7 @@ class Game
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      */
     private $description;
 
@@ -37,17 +37,12 @@ class Game
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $date_achat;
+    private $dateAchat;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
-
-    /**
-     * @ORM\Column(type="json",nullable=true)
-     */
-    private $video;
 
     /**
      * @ORM\ManyToOne(targetEntity=Editeur::class, inversedBy="games")
@@ -62,21 +57,29 @@ class Game
     private $Genre;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ListeEnvie::class, inversedBy="games")
-     * @ORM\JoinColumn(name="id_envie")
+     * @ORM\ManyToOne(targetEntity=Platform::class, inversedBy="games")
+     * @ORM\JoinColumn(name="id_platform")
      */
-    private $ListeEnvie;
+    private $Platform;
 
     /**
-     * @ORM\OneToMany(targetEntity=Impression::class, mappedBy="Game")
+     * @ORM\Column(type="date",nullable=true)
      */
-    private $impressions;
+    private $dateSortie;
+    /**
+     * @ORM\Column(type="boolean",nullable=false)
+     */
+    private $isBuy;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="game")
+     */
+    private $video;
 
     public function __construct()
     {
-        $this->impressions = new ArrayCollection();
+        $this->video = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -121,12 +124,12 @@ class Game
 
     public function getDateAchat(): ?\DateTimeInterface
     {
-        return $this->date_achat;
+        return $this->dateAchat;
     }
 
-    public function setDateAchat(?\DateTimeInterface $date_achat): self
+    public function setDateAchat(?\DateTimeInterface $dateAchat): self
     {
-        $this->date_achat = $date_achat;
+        $this->dateAchat = $dateAchat;
 
         return $this;
     }
@@ -142,26 +145,6 @@ class Game
 
         return $this;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getVideo()
-    {
-        return $this->video;
-    }
-
-    /**
-     * @param mixed $video
-     * @return Game
-     */
-    public function setVideo($video)
-    {
-        $this->video = $video;
-        return $this;
-    }
-
-
 
     public function getEditeur(): ?Editeur
     {
@@ -187,23 +170,83 @@ class Game
         return $this;
     }
 
-    public function getListeEnvie(): ?ListeEnvie
+
+    public function getPlatform(): ?Platform
     {
-        return $this->ListeEnvie;
+        return $this->Platform;
     }
 
-    public function setListeEnvie(?ListeEnvie $ListeEnvie): self
+    public function setPlatform(?Platform $Platform): self
     {
-        $this->ListeEnvie = $ListeEnvie;
+        $this->Platform = $Platform;
 
         return $this;
     }
 
     /**
-     * @return Collection|Impression[]
+     * @return mixed
      */
-    public function getImpressions(): Collection
+    public function getDateSortie()
     {
-        return $this->impressions;
+        return $this->dateSortie;
     }
+
+    /**
+     * @param mixed $dateSortie
+     * @return Game
+     */
+    public function setDateSortie($dateSortie)
+    {
+        $this->dateSortie = $dateSortie;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsBuy()
+    {
+        return $this->isBuy;
+    }
+
+    /**
+     * @param mixed $isBuy
+     * @return Game
+     */
+    public function setIsBuy($isBuy)
+    {
+        $this->isBuy = $isBuy;
+        return $this;
+    }
+
+    /**
+     * @return Collection|video[]
+     */
+    public function getVideo(): Collection
+    {
+        return $this->video;
+    }
+
+    public function addVideo(video $video): self
+    {
+        if (!$this->video->contains($video)) {
+            $this->video[] = $video;
+            $video->setGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(video $video): self
+    {
+        if ($this->video->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getGame() === $this) {
+                $video->setGame(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

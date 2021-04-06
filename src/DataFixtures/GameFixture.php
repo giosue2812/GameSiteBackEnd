@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Editeur;
 use App\Entity\Game;
 use App\Entity\Genre;
+use App\Entity\Platform;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -17,6 +18,8 @@ class GameFixture extends Fixture
     public function load(ObjectManager $manager)
     {
         $date = new \DateTime();
+        $platform = new Platform();
+        $platform->setLabel('PS4');
         $genre = new Genre();
         $genre
             ->setLabel('Adventure');
@@ -30,10 +33,14 @@ class GameFixture extends Fixture
             ->setDescription('Au centre de l\'intrigue du premier volet, nous retrouvons à nouveau Joel et Ellie plus déterminée que jamais à éradiquer les infectés jusqu\'au dernier. Se déroulant à nouveau dans un monde post apocalyptique, le duo toujours aussi soudé devra prendre les décisions qui s\'imposent afin de survivre un seul jour de plus à cette pandémie.')
             ->setDateAchat($date->setDate(2020,06,25))
             ->setImage('test')
+            ->setDateSortie($date->setDate(2020,06,19))
+            ->setIsBuy(true)
             ->setPrix(64.99)
             ->setEditeur($editeur)
-            ->setGenre($genre);
+            ->setGenre($genre)
+            ->setPlatform($platform);
 
+        $manager->persist($platform);
         $manager->persist($genre);
         $manager->persist($editeur);
         $manager->persist($game);
